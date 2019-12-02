@@ -20,8 +20,8 @@ class MovieController(
 		}))
 
 	@GetMapping("{movieId}")
-	fun getMovieById(@PathVariable id:Long)=
-			movieRepository.findById(id)
+	fun getMovieById(@PathVariable movieId:Long)=
+			movieRepository.findById(movieId)
 
 	@GetMapping("/search")
 	fun searchMovie(@RequestParam("name") name:String)=
