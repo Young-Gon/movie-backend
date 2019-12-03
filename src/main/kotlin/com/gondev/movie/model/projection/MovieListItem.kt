@@ -13,4 +13,8 @@ interface MovieListItem {
 	val grade: Int
 	val thumb: String?
 	val image: String?
+	val genre: String?
+	val director: String?
+	val actor: String?
+	val synopsis: String?
 }

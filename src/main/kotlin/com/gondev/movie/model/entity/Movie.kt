@@ -27,6 +27,7 @@ data class Movie(
 	val genre: String?,
 	val duration: Int,
 	val audience: Long,
+	@Column(length = 1024)
 	val synopsis: String?,
 	val director: String?,
 	val actor: String?,
