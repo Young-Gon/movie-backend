@@ -1,5 +1,9 @@
 package com.gondev.movie.model.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.gondev.movie.model.audit.BaseAudit
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 import javax.persistence.*
 
 const val LIKE = 1
@@ -8,9 +12,6 @@ const val DISLIKE = -1
 
 @Entity
 data class Movie(
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	val id: Long,
 	val title: String?,
 	val titleEng: String?,
 	val date: String?,
@@ -33,5 +34,9 @@ data class Movie(
 	val actor: String?,
 	@Column(name = "movie_like")
 	val like: Long,
-	val dislike: Long
-) 
+	val dislike: Long,
+    @JsonIgnore
+    @OneToMany(mappedBy = "movie", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @Fetch(FetchMode.SELECT)
+    var comments: MutableList<Comment> = mutableListOf()
+): BaseAudit()
