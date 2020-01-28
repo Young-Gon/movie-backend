@@ -1,17 +1,23 @@
 package com.gondev.movie.controller
 
+import com.gondev.movie.model.entity.Comment
 import com.gondev.movie.model.repository.CommentRepository
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/movie/{movieId}/comment")
+@RequestMapping("/comment")
 class CommentController(
         val commentRepository: CommentRepository
 ) {
-    @GetMapping
-    fun getCommentList(@PathVariable movieId: Long) =
-            commentRepository.findAllByMovieId(movieId)
+
+    @GetMapping("/{commentId}/recommend")
+    fun increaseRecommend(@PathVariable commentId: Long,
+                          @RequestParam("writer") writer: String) =
+            commentRepository.increaseRecommend(commentId)
+
+    @GetMapping("/{commentId}")
+    fun writeComment(@PathVariable commentId: Long,
+                     @RequestParam("writer") writer: String,
+                     @RequestParam("contents") contents: String) =
+            commentRepository.save(Comment(writer, contents))
 }
