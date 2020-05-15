@@ -12,9 +12,9 @@ const val DISLIKE = -1
 
 @Entity
 data class Movie(
-	val title: String?,
+	val title: String,
 	val titleEng: String?,
-	val date: String?,
+	val date: String,
 	val userRating: Float,
 	val audienceRating: Float,
 	val reviewerRating: Float,
@@ -23,6 +23,7 @@ data class Movie(
 	val grade: Int,
 	val thumb: String?,
 	val image: String?,
+	@Column(length = 1024)
 	val photos: String?,
 	val videos: String?,
 	val genre: String?,
