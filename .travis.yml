@@ -11,6 +11,20 @@ cache:
 script: "./gradlew clean build"
 before_install:
   - chmod +x gradlew
+before_deploy:
+  - zip -r movie-backend *
+  - mkdir -p deploy
+  - mv movie-backend.zip deploy/movie-backend.zip
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: movie-springboot-build
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy
+    wait-until-deployed: true
 notifications:
   email:
     recipients:
