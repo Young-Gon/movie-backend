@@ -2,6 +2,8 @@ HELP.md
 .gradle
 build/
 log/
+application-secret.yml
+logback-spring.xml
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
