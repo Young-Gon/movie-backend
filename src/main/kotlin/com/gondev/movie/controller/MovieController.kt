@@ -1,7 +1,10 @@
 package com.gondev.movie.controller
 
 import com.gondev.movie.MovieApplication
+import com.gondev.movie.exception.ResourceNotFoundException
+import com.gondev.movie.model.entity.Comment
 import com.gondev.movie.model.entity.Movie
+import com.gondev.movie.model.payload.CommentWithMovieId
 import com.gondev.movie.model.projection.MovieListItem
 import com.gondev.movie.model.repository.CommentRepository
 import com.gondev.movie.model.repository.MovieRepository
@@ -39,20 +42,24 @@ class MovieController(
     @GetMapping("/{movieId}/increaseLike")
     fun increaseLike(@PathVariable movieId: Long,
                      @RequestParam("likeyn") likeyn: String) =
-            if (likeyn.equals("y", true)) {
-                movieRepository.increaseLike(movieId)
-            } else if (likeyn.equals("n", true)) {
-                movieRepository.decreaseLike(movieId)
-            } else throw IllegalArgumentException("likeyn은 'y' 또는 'n'으로 표기 되어야 합니다")
+            when {
+                likeyn.equals("y", true) ->
+                    movieRepository.increaseLike(movieId)
+                likeyn.equals("n", true) ->
+                    movieRepository.decreaseLike(movieId)
+                else -> throw IllegalArgumentException("likeyn은 'y' 또는 'n'으로 표기 되어야 합니다")
+            }
 
     @GetMapping("/{movieId}/increaseDislike")
     fun increaseDislike(@PathVariable movieId: Long,
                         @RequestParam("dislikeyn") likeyn: String) =
-            if (likeyn.equals("y", true)) {
-                movieRepository.increaseDisLike(movieId)
-            } else if (likeyn.equals("n", true)) {
-                movieRepository.decreaseDisLike(movieId)
-            } else throw IllegalArgumentException("dislikeyn은 'y' 또는 'n'으로 표기 되어야 합니다")
+            when {
+                likeyn.equals("y", true) ->
+                    movieRepository.increaseDisLike(movieId)
+                likeyn.equals("n", true) ->
+                    movieRepository.decreaseDisLike(movieId)
+                else -> throw IllegalArgumentException("dislikeyn은 'y' 또는 'n'으로 표기 되어야 합니다")
+            }
 
     @PostMapping
     fun saveMove(@RequestBody movie: Movie) =
@@ -64,5 +71,16 @@ class MovieController(
 
     @GetMapping("/{movieId}/comment")
     fun getCommentList(@PathVariable movieId: Long) =
-            commentRepository.findAllByMovieId(movieId)
+            commentRepository.findAllByMovieId(movieId).map {
+                CommentWithMovieId(it)
+            }
+
+    @PostMapping("/{movieId}/comment")
+    fun writeComment(@PathVariable movieId: Long, @RequestBody comment:Comment) =
+            movieRepository.findById(movieId).map { movie ->
+                comment.movie=movie
+                commentRepository.save(comment).id
+            }.orElseThrow {
+                throw ResourceNotFoundException("요청한 영화 정보(id=$movieId)를 찾을 수 없습니다.")
+            }
 }
