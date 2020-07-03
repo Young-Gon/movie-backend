@@ -9,12 +9,12 @@ import javax.persistence.ManyToOne
 
 @Entity
 data class Comment(
-    val writer: String,
-    val contents: String , //":"ㅅㅅㅅㅅ",
-    val writer_image: String? = null,
-    val rating: Float = 0f, //":7.0,
-    var recommend: Int=0, //":0
-    @JsonIgnore
+        val writer: String,
+        val contents: String, //":"ㅅㅅㅅㅅ",
+        val writerImage: String? = null,
+        val rating: Float = 0f, //":7.0,
+        var recommend: Int=0, //":0
+        @JsonIgnore
     @ManyToOne(targetEntity = Movie::class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="movie_id", nullable = false)
     var movie: Movie?=null

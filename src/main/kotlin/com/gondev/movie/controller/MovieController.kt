@@ -4,7 +4,6 @@ import com.gondev.movie.MovieApplication
 import com.gondev.movie.exception.ResourceNotFoundException
 import com.gondev.movie.model.entity.Comment
 import com.gondev.movie.model.entity.Movie
-import com.gondev.movie.model.payload.CommentWithMovieId
 import com.gondev.movie.model.projection.MovieListItem
 import com.gondev.movie.model.repository.CommentRepository
 import com.gondev.movie.model.repository.MovieRepository
@@ -12,6 +11,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Sort
 import org.springframework.web.bind.annotation.*
+import javax.transaction.Transactional
 
 @RestController
 @RequestMapping("/movie")
@@ -39,7 +39,8 @@ class MovieController(
     fun searchMovie(@RequestParam("name") name: String) =
             movieRepository.findAllByTitleOrTitleEng(name, name)
 
-    @GetMapping("/{movieId}/increaseLike")
+    @Transactional
+    @PutMapping("/{movieId}/increaseLike")
     fun increaseLike(@PathVariable movieId: Long,
                      @RequestParam("likeyn") likeyn: String) =
             when {
@@ -50,7 +51,8 @@ class MovieController(
                 else -> throw IllegalArgumentException("likeyn은 'y' 또는 'n'으로 표기 되어야 합니다")
             }
 
-    @GetMapping("/{movieId}/increaseDislike")
+    @Transactional
+    @PutMapping("/{movieId}/increaseDislike")
     fun increaseDislike(@PathVariable movieId: Long,
                         @RequestParam("dislikeyn") likeyn: String) =
             when {
@@ -71,9 +73,7 @@ class MovieController(
 
     @GetMapping("/{movieId}/comment")
     fun getCommentList(@PathVariable movieId: Long) =
-            commentRepository.findAllByMovieId(movieId).map {
-                CommentWithMovieId(it)
-            }
+            commentRepository.findAllByMovieId(movieId)
 
     @PostMapping("/{movieId}/comment")
     fun writeComment(@PathVariable movieId: Long, @RequestBody comment:Comment) =
