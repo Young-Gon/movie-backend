@@ -27,8 +27,8 @@
 스프링 부트를 잘아시는 분은 필요 없는 부분이지만, 저처럼 처음인 분들을 위해 작성합니다
 
 * 필요한 프로그램: [인텔리J IDE - Community (IntelliJ IDE - Community)](https://www.jetbrains.com/ko-kr/idea/download/download-thanks.html?platform=windows&code=IIC)      
-    > 유료인 Ultimate 버전과 무료인Community 버전이 있습니다. 이 프로젝트에서는 무료인 Community 버전으로 충분하니 Community 버전으로 진행합니다
-    > Ultimate버전이 있으신 분은 Ultimate를 사용하시면 됩니다
+    > 유료인 Ultimate 버전과 무료인Community 버전이 있습니다. 이 프로젝트에서는 무료인 Community 버전으로 충분하니 Community 버전으로 진행합니다   
+    Ultimate버전이 있으신 분은 Ultimate를 사용하시면 됩니다
 
 1. 일단 인텔리J를 다운 받고 설치 합니다
 2. 이 프로젝트를 다운 받고 적당한 곳에 압축을 풉니다
@@ -37,9 +37,10 @@
 4. open or import를 선택 합니다
 5. 폴더 탐색창이 열리면 방금 풀어놓은 프로젝트를 선택 합니다
 6. 프로젝트가 열리고 빌드가 시작됩니다
-7. 서버 실행은 빌드가 완료되고 난후 오른쪽 탐색창에서 /src/main/kotlin/com.gondev.movie/MovieApplication.kt 파일로 이동하신 후 `main`()함수 옆에 실행 화살표를 클릭하시면 실행이 됩니다   
+7. 서버 실행은 빌드가 완료되고 난후 오른쪽 탐색창에서 /src/main/kotlin/com.gondev.movie/MovieApplication.kt 파일로 이동하신 후 `main`()함수 옆에 있는 실행 화살표를 클릭하시면 실행이 됩니다   
     ![run project](./image/run_project.png)  
+8. 정상적으로 실행된 화면    
     ![success running](./image/success_running.png)
-8. 정상적으로 동작하는지 확인해 보기
+9. 정상적으로 동작하는지 확인해 보기
    > 정상적으로 구동이 완료 되면, 다음 링크를 클릭하면 영화정보를 보여 줍니다   
    > http://localhost:8080/movie?type=1
